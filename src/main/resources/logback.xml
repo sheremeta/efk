@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FLUENT_SYNC" class="ch.qos.logback.more.appenders.DataFluentAppender">
+
+        <tag>efk</tag>
+        <label>logback</label>
+        <remoteHost>localhost</remoteHost>
+        <port>24224</port>
+
+        <encoder>
+            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %msg]]></pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FLUENT" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>500</queueSize>
+        <neverBlock>true</neverBlock>
+        <maxFlushTime>10000</maxFlushTime>
+
+        <appender-ref ref="FLUENT_SYNC"/>
+    </appender>
+
+    <logger name="com.poc.efk.SimpleController" level="INFO">
+        <appender-ref ref="FLUENT"/>
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
