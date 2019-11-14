@@ -14,6 +14,6 @@ public class SimpleController {
 
     @PostMapping("/log")
     public void log() {
-        LOG.info("Start processing: credit_card_number");
+        LOG.info("Start processing: 4485796040979774");
     }
 }
