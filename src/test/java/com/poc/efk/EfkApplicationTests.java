@@ -28,5 +28,4 @@ class EfkApplicationTests {
 
         assertThat(restTemplate.postForEntity(url, null, Void.class).getStatusCode()).isEqualTo(OK);
     }
-
 }
